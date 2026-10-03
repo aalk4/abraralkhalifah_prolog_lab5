@@ -1,0 +1,75 @@
+female(mona).
+female(jackie).
+female(marge).
+female(patty).
+female(selma).
+female(lisa).
+female(maggie).
+female(ling).
+
+
+male(abraham).
+male(clancy).
+male(herb).
+male(homer).
+male(bart).
+
+
+parent(mona, herb).
+parent(abraham, herb).
+parent(mona, homer).
+parent(abraham, homer).
+
+parent(jackie, marge).
+parent(clancy, marge).
+parent(jackie, patty).
+parent(clancy, patty).
+parent(jackie, selma).
+parent(clancy, selma).
+
+parent(marge, lisa).
+parent(homer, lisa).
+parent(marge, maggie).
+parent(homer, maggie).
+parent(marge, bart).
+parent(homer, bart).
+
+parent(selma, ling).
+
+
+
+mother(X,Y):-
+    parent(X,Y),  female(X).
+
+father(X,Y):-
+   parent(X,Y),  male(X).
+
+daughter(Y,X):-
+    parent(X,Y), female(Y).
+
+son(Y,X):-
+    parent(X,Y), male(Y).
+
+sister(X,Y):-
+    parent(P, X), parent(P, Y), female(X), X\=Y.
+
+brother(X,Y):-
+    parent(P, X), parent(P, Y), male(X), X\=Y.
+
+grandfather(X,Y):-
+    parent(X, P), parent(P, Y), male(X).
+
+aunt(X,Y):-
+    parent(G, X), parent(P, Y), parent(G, P), female(X).
+
+uncle(X,Y):-
+    parent(G, X), parent(P, Y), parent(G, P), male(X).
+
+cousin(X,Y):-
+    grandfather(G, X), grandfather(G, Y).
+
+ancestor(X,Y):-
+    parent(X,Y).
+
+ancestor(X,Y):-
+    parent(X, Y), ancestor(X, Y).
